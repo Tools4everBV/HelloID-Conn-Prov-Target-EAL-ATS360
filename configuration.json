@@ -1,0 +1,12 @@
+[
+  {
+    "key": "BaseUrl",
+    "type": "input",
+    "defaultValue": "",
+    "templateOptions": {
+      "label": "Base URL",
+      "placeholder": "https://eal-api.{company}.nl",
+      "required": true
+    }
+  }
+]
