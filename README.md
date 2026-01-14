@@ -91,7 +91,9 @@ The account reference is populated with the property `id` property from _EAL-ATS
 ## Remarks
 
 ### No Authentication
-- **No Authentication**: The connector was built and tested in an environment where the API did not require authentication. Because the API was only accessible within the environment’s internal network, no API authentication was implemented in the connector.
+- **No Authentication**: The connector was built and tested in an environment where the API did not require authentication.  
+Because the API was only accessible within the environment’s internal network, no API authentication was implemented in the connector.  
+However, according to the API documentation, it is possible to implement authentication if required.
 
 ### Mandatory property
 - **LastName**: The property lastName is a mandatory property when creating or updating a user.
