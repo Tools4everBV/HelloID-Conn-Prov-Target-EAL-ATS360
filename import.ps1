@@ -86,7 +86,7 @@ try {
                 # Make sure the userName has a value
                 $username = "$($importedAccount.email)"
                 if ([string]::IsNullOrWhiteSpace($username)) {
-                    $username = $importedAccount.Id
+                    $username = "$($importedAccount.Id)"
                 }
 
                 Write-Output @{

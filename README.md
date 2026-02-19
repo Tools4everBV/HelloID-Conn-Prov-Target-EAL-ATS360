@@ -52,7 +52,7 @@ The following features are available:
 ### HelloID Icon URL
 URL of the icon used for the HelloID Provisioning target system.
 ```
-https://raw.githubusercontent.com/Tools4everBV/HelloID-Conn-Prov-Target-ActiveDirectory/refs/heads/main/Icon.png
+https://raw.githubusercontent.com/Tools4everBV/HelloID-Conn-Prov-Target-EAL-ATS360/refs/heads/main/Icon.png
 ```
 
 ### Requirements
