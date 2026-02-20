@@ -18,23 +18,6 @@
       ]
     },
     {
-      "Name": "firstName",
-      "Description": "",
-      "Type": "Text",
-      "MappingActions": [
-        {
-          "MapForActions": [
-            "Create",
-            "Update"
-          ],
-          "MappingMode": "Field",
-          "Value": "\"Person.Name.NickName\"",
-          "UsedInNotifications": false,
-          "StoreInAccountData": false
-        }
-      ]
-    },
-    {
       "Name": "gender",
       "Description": "",
       "Type": "Text",
@@ -46,22 +29,6 @@
           ],
           "MappingMode": "Complex",
           "Value": "\"function getValue() {\\n    let gender;\\n    switch(Person.Details.Gender) {\\n    case \\\"Vrouw\\\":\\n        gender = \\\"Female\\\"\\n    case \\\"Man\\\":\\n        gender = \\\"Male\\\"\\n    default:\\n        gender = \\\"Unknown\\\"\\n    }\\n    return gender;\\n}\\ngetValue();\"",
-          "UsedInNotifications": false,
-          "StoreInAccountData": false
-        }
-      ]
-    },
-    {
-      "Name": "badgeHolderTypeId",
-      "Description": "",
-      "Type": "Text",
-      "MappingActions": [
-        {
-          "MapForActions": [
-            "Create"
-          ],
-          "MappingMode": "Complex",
-          "Value": "\"function getValue() {\\n    let costBearer;\\n    switch (Person.PrimaryContract.CostBearer.Name) {\\n        case \\\"Direct\\\":\\n            costBearer = 1;\\n            break;\\n        case \\\"Indirect\\\":\\n            costBearer = 1;\\n            break;\\n        case \\\"Stagiair\\\":\\n            costBearer = 1;\\n            break;\\n        case \\\"Externe\\\":\\n            costBearer = 7;\\n            break;\\n        case \\\"One-shore\\\":\\n            costBearer = 7;\\n            break;\\n        default:\\n            costBearer = 0;\\n            break;\\n    }\\n    return costBearer;\\n}\\n\\ngetValue();\"",
           "UsedInNotifications": false,
           "StoreInAccountData": false
         }
@@ -84,6 +51,22 @@
       ]
     },
     {
+      "Name": "badgeHolderTypeId",
+      "Description": "",
+      "Type": "Text",
+      "MappingActions": [
+        {
+          "MapForActions": [
+            "Create"
+          ],
+          "MappingMode": "Complex",
+          "Value": "\"function getValue() {\\n    let costCenter;\\n    switch (Person.PrimaryContract.CostCenter.ExternalId) {\\n        case \\\"05\\\":  //Direct\\n            costCenter = 1;\\n            break;\\n        case \\\"01\\\":  //Indirect\\n            costCenter = 1;\\n            break;\\n        case \\\"03\\\":  //Stagiair\\n            costCenter = 1;\\n            break;\\n        case \\\"07\\\":  //Externe\\n            costCenter = 7;\\n            break;\\n        case \\\"09\\\":  //One-shore\\n            costCenter = 7;\\n            break;\\n        case \\\"11\\\":  //Intercompany\\n            costCenter = 7;\\n            break;   \\n        default:\\n            costCenter = 0;\\n            break;\\n    }\\n    return costCenter;\\n}\\n\\ngetValue();\"",
+          "UsedInNotifications": false,
+          "StoreInAccountData": false
+        }
+      ]
+    },
+    {
       "Name": "email",
       "Description": "",
       "Type": "Text",
@@ -93,9 +76,43 @@
             "Create",
             "Update"
           ],
-          "MappingMode": "Complex",
-          "Value": "\"function getEmail() {\\r\\n    let mail = '';\\r\\n        if (typeof Person.Accounts.MicrosoftActiveDirectory.mail !== 'undefined' && Person.Accounts.MicrosoftActiveDirectory.mail) {\\r\\n            mail = Person.Accounts.MicrosoftActiveDirectory.mail;\\r\\n        } return mail;\\r\\n    }\\r\\ngetEmail()\"",
-          "UsedInNotifications": false,
+          "MappingMode": "Field",
+          "Value": "\"Person.Contact.Business.Email\"",
+          "UsedInNotifications": true,
+          "StoreInAccountData": false
+        }
+      ]
+    },
+    {
+      "Name": "company",
+      "Description": "",
+      "Type": "Text",
+      "MappingActions": [
+        {
+          "MapForActions": [
+            "Create",
+            "Update"
+          ],
+          "MappingMode": "Field",
+          "Value": "\"Person.PrimaryContract.Employer.Name\"",
+          "UsedInNotifications": true,
+          "StoreInAccountData": false
+        }
+      ]
+    },
+    {
+      "Name": "firstName",
+      "Description": "",
+      "Type": "Text",
+      "MappingActions": [
+        {
+          "MapForActions": [
+            "Create",
+            "Update"
+          ],
+          "MappingMode": "Field",
+          "Value": "\"Person.Name.NickName\"",
+          "UsedInNotifications": true,
           "StoreInAccountData": false
         }
       ]
@@ -110,9 +127,9 @@
             "Create",
             "Update"
           ],
-          "MappingMode": "Field",
-          "Value": "\"Person.Name.FamilyName\"",
-          "UsedInNotifications": false,
+          "MappingMode": "Complex",
+          "Value": "\"// Mapping logic to generate the Surname according to the following convention.\\r\\n// B\\tBoele\\r\\n// BP\\tBoele – De Vries\\r\\n// P\\tVries\\r\\n// PB\\tVries – van den Boele\\r\\nfunction generateSurname() {\\r\\n    let middleName = Person.Name.FamilyNamePrefix;\\r\\n    let lastName = Person.Name.FamilyName;\\r\\n    let middleNamePartner = Person.Name.FamilyNamePartnerPrefix;\\r\\n    let lastNamePartner = Person.Name.FamilyNamePartner;\\r\\n    let convention = Person.Name.Convention;\\r\\n\\r\\n    let surName = '';\\r\\n    switch (convention) {\\r\\n        case \\\"BP\\\":\\r\\n            surName = surName + lastName;\\r\\n\\r\\n            surName = surName + ' - ';\\r\\n            if (typeof middleNamePartner !== 'undefined' && middleNamePartner) { surName = surName + middleNamePartner + ' ' }\\r\\n            surName = surName + lastNamePartner;\\r\\n            break;\\r\\n        case \\\"PB\\\":\\r\\n            surName = surName + lastNamePartner;\\r\\n            surName = surName + ' - ';\\r\\n            if (typeof middleName !== 'undefined' && middleName) { surName = surName + middleName + ' ' }\\r\\n            surName = surName + lastName;\\r\\n            break;\\r\\n        case \\\"P\\\":\\r\\n            surName = surName + lastNamePartner;\\r\\n            break;\\r\\n        case \\\"B\\\":\\r\\n        default:\\r\\n            surName = surName + lastName;\\r\\n            break;\\r\\n    }\\r\\n    // Trim spaces at start and end\\r\\n    surName = surName.trim();\\r\\n\\r\\n    // 20260210KM: undocumented, leave in comment, use when needed. --> according to database specs nvarchar(50)\\r\\n    // Shorten string to maxAttributeLength \\r\\n    const maxAttributeLength = 50;\\r\\n    surName = surName.substring(0, maxAttributeLength);\\r\\n\\r\\n    return surName;\\r\\n}\\r\\n\\r\\ngenerateSurname();\"",
+          "UsedInNotifications": true,
           "StoreInAccountData": false
         }
       ]
@@ -127,9 +144,9 @@
             "Create",
             "Update"
           ],
-          "MappingMode": "Field",
-          "Value": "\"Person.Name.FamilyNamePrefix\"",
-          "UsedInNotifications": false,
+          "MappingMode": "Complex",
+          "Value": "\"function getMiddleName() {\\r\\n    let middleName = Person.Name.FamilyNamePrefix;\\r\\n    let middleNamePartner = Person.Name.FamilyNamePartnerPrefix;\\r\\n    let convention = Person.Name.Convention;\\r\\n    let retVal = '';\\r\\n\\r\\n    switch (convention) {   \\r\\n        case \\\"PB\\\":\\r\\n        case \\\"P\\\":\\r\\n            if (typeof middleNamePartner !== 'undefined' && middleNamePartner) { retVal = middleNamePartner }\\r\\n            break;\\r\\n        case \\\"B\\\":\\r\\n        case \\\"BP\\\":\\r\\n        default:\\r\\n            if (typeof middleName !== 'undefined' && middleName) { retVal = middleName }\\r\\n            break;\\r\\n    }\\r\\n    return retVal;\\r\\n}\\r\\n\\r\\ngetMiddleName();\"",
+          "UsedInNotifications": true,
           "StoreInAccountData": false
         }
       ]
